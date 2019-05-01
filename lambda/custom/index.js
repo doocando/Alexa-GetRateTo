@@ -3,6 +3,12 @@
 // session persistence, api calls, and more.
 const Alexa = require('ask-sdk-core');
 
+
+const COUNTRY_NAME = 'Colombia';
+const COUNTRY_ID = 'COL';
+const MODE_CURRENY = 'N';
+
+
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
       return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
@@ -28,6 +34,32 @@ const HelloWorldIntentHandler = {
         .getResponse();
     }
 };
+
+const GetRateToHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetRateTo';
+  },
+  handle(handlerInput) {
+    var speechText = 'Hola, la tasa para ' + COUNTRY_NAME + ' es ' + GetRateTo(COUNTRY_ID, MODE_CURRENY);;
+
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+      .getResponse();
+  }
+};
+
+function GetRateTo(sCountry, smodecurrency) {
+   
+
+  var rate = 3000.5
+
+  return rate;
+}
+
+
 const HelpIntentHandler = {
     canHandle(handlerInput) {
       return handlerInput.requestEnvelope.request.type === 'IntentRequest'
