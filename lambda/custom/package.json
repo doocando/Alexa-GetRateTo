@@ -1,5 +1,5 @@
 {
-  "name": "hellonode",
+  "name": "viamericas",
   "version": "1.0.0",
   "description": "Hello World Alexa Skill using ASK Nodejs SDK",
   "main": "index.js",

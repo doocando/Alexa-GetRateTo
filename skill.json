@@ -3,14 +3,12 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "summary": "A basic skill made from Alexa Skills Kit template",
+          "summary": "Viamericas basic Alexa skill to get a rate for a country",
           "examplePhrases": [
-            "Alexa open hello node",
-            "Alexa tell hello node hello",
-            "Alexa ask hello node say hello"
+            "Alexa ask Viamericas rate to"
           ],
-          "name": "hello node",
-          "description": "A basic skill made from Alexa Skills Kit template"
+          "name": "viamericas",
+          "description": "Viamericas basic Alexa skill to get a rate for a country"
         }
       },
       "isAvailableWorldwide": true,
