@@ -38,7 +38,7 @@ const HelloWorldIntentHandler = {
 const GetRateToHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'GetRateTo';
+      && handlerInput.requestEnvelope.request.intent.name === 'GetRateToIntent';
   },
   handle(handlerInput) {
     var speechText = 'Hola, la tasa para ' + COUNTRY_NAME + ' es ' + GetRateTo(COUNTRY_ID, MODE_CURRENY);;

@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "hello node",
+            "invocationName": "viamericas",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -26,6 +26,14 @@
                         "hi",
                         "say hello world",
                         "say hello"
+                    ]
+                },
+                {
+                    "name": "GetRateToIntent",
+                    "slots": [],
+                    "samples": [
+                        "rate to",
+                        "rate"
                     ]
                 }
             ],
