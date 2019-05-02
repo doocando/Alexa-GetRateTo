@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "viamericas",
+            "invocationName": "pedro",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
