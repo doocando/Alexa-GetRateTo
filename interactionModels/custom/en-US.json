@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "viamericas",
+            "invocationName": "money transfer",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
