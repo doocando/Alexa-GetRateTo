@@ -1,0 +1,114 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "viamericas",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ViaWelcomeIntent",
+                    "slots": [],
+                    "samples": [
+                        "hello",
+                        "how are you",
+                        "say hi world",
+                        "say hi",
+                        "hi",
+                        "say hello world",
+                        "say hello"
+                    ]
+                },
+                {
+                    "name": "RateToIntent",
+                    "slots": [
+                        {
+                            "name": "country",
+                            "type": "AMAZON.Country"
+                        }
+                    ],
+                    "samples": [
+                        "what is the current rate",
+                        "how much your payin to {country}",
+                        "what is the rate to {country}"
+                    ]
+                },
+                {
+                    "name": "TeachMeSomethingIntent",
+                    "slots": [],
+                    "samples": [
+                        "teach me something"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PauseIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ResumeIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "RateToIntent",
+                    "confirmationRequired": false,
+                    "prompts": {}, 
+                    "slots": [
+                        {
+                            "name": "country",
+                            "type": "AMAZON.Country",
+                            "confirmationRequired": true,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "confirmation":"Confirm.Slot.1170703155793.1169631125804",
+                                "elicitation": "Elicit.Slot.1542222363501.904961726653"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.1542222363501.904961726653",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Rate to which country ?"
+                    }
+                ]
+            },
+            {  
+                "id": "Confirm.Slot.1170703155793.1169631125804",  
+                "variations": [  
+                    {  
+                        "type": "PlainText",  
+                        "value": "You said you're sending money to  {country},  right?"  
+                    }
+                ]  
+            }
+        ]
+    }
+}

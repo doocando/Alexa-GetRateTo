@@ -1,0 +1,11 @@
+{
+    "translation":{
+        "WELCOME_MSG":"Bienvenido, puede decir hola o ayuda. Cual quiere intentar?",
+        "HELLO_MSG": "Hola Mundo!",
+        "HELP_MSG": "Puede decirme hola! Como puedo ayudar?",
+        "GOODBYE_MSG":"Hasta luego!",
+        "REFLECTOR_MSG": "Acabas de ejecutar {{intentName}}",
+        "FALLBACK_MSG":"Disculpa, No se eso. Puedes intentar nuevamente.",
+        "ERROR_MSG": "Disculpa, tengo problemas haciendo lo que solicitas. Puedes intentar nuevamente."   
+    }
+}
