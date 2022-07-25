@@ -3,7 +3,20 @@
 // session persistence, api calls, and more.
 const Alexa = require('ask-sdk-core');
 const i18n = require("i18next");
+const countries = require("i18n-iso-countries");
 
+countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+countries.registerLocale(require("i18n-iso-countries/langs/es.json"));
+
+
+String.format = function() {
+            var s = arguments[0];
+            for (var i = 0; i < arguments.length - 1; i += 1) {
+                var reg = new RegExp('\\{' + i + '\\}', 'gm');
+                s = s.replace(reg, arguments[i + 1]);
+            }
+            return s;
+        };
 
 const languageStrings = {
     'en': require('./locales/en.json'),
@@ -31,7 +44,6 @@ const ViaWelcomeIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'ViaWelcomeIntent';
     },
     handle(handlerInput) {
-        console.log('handlerInput',handlerInput)
         const speakOutput = handlerInput.t('HELLO_MSG'); //'Hello, how can I help you?';
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -136,22 +148,39 @@ const LocalisationRequestInterceptor={
 //******************************CUSTOM INTENTS ***********************/
 
 function GetRateTo(sCountry, smodecurrency) {
-    var rate = '3000.5 Colombian Pesos'
-  
-    return rate;
+
+    var rate = 0
+    
+    if (sCountry === 'COL')
+        rate = 3000
+    return rate
+
   }
 
 const RateToIntentIntentHandler = {
-    canHandle(handlerInput) {
+
+   canHandle(handlerInput) {
+    
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'RateToIntent';
     },
     handle(handlerInput) {
-        const COUNTRY_NAME = 'Colombia';
-        const COUNTRY_ID = 'COL';
-        const MODE_CURRENY = 'N';
 
-        const speakOutput = 'Rate to ' + COUNTRY_NAME + ' starts at ' + GetRateTo(COUNTRY_ID, MODE_CURRENY)  ;
+        const COUNTRY_NAME = handlerInput.requestEnvelope.request.intent.slots.country.value
+        const MODE_CURRENY = 'N';
+        const language = "en"
+
+        const COUNTRY_ID = countries.getAlpha3Code(COUNTRY_NAME, language);
+        console.log('COUNTRY_ID',COUNTRY_ID)
+        let rate =  GetRateTo(COUNTRY_ID, MODE_CURRENY) 
+        let speakOutput = ''
+        console.log('rate',rate)
+        if (rate > 0) 
+            speakOutput =  String.format(handlerInput.t('RATE_MSG'),  COUNTRY_NAME ,rate ); 
+        else
+            speakOutput =  handlerInput.t('FALLBACK_MSG'); 
+        
+        console.log('speakOutput',speakOutput)
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')

@@ -38,7 +38,7 @@
                     ],
                     "samples": [
                         "what is the current rate",
-                        "how much your payin to {country}",
+                        "how much your paying to {country}",
                         "what is the rate to {country}"
                     ]
                 },
@@ -105,7 +105,7 @@
                 "variations": [  
                     {  
                         "type": "PlainText",  
-                        "value": "You said you're sending money to  {country},  right?"  
+                        "value": "You said you're sending money to {country}, right?"  
                     }
                 ]  
             }
