@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "viamericas",
+            "invocationName": "redphone",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -16,16 +16,29 @@
                     "samples": []
                 },
                 {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PauseIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ResumeIntent",
+                    "samples": []
+                },
+                {
                     "name": "ViaWelcomeIntent",
                     "slots": [],
                     "samples": [
                         "hello",
                         "how are you",
-                        "say hi world",
                         "say hi",
-                        "hi",
-                        "say hello world",
-                        "say hello"
+                        "hi"
                     ]
                 },
                 {
@@ -43,27 +56,33 @@
                     ]
                 },
                 {
+                    "name": "SendMoneyIntent",
+                    "slots": [
+                        {
+                            "name": "country",
+                            "type": "AMAZON.Country"
+                        },
+                        {
+                            "name": "phone_number",
+                            "type": "AMAZON.PhoneNumber"
+                        },
+                        {
+                            "name": "lastname",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "I want to send money",
+                        "I want to send money to {country}",
+                        "send money to {country}"
+                    ]
+                },
+                {
                     "name": "TeachMeSomethingIntent",
                     "slots": [],
                     "samples": [
                         "teach me something"
                     ]
-                },
-                {
-                    "name": "AMAZON.NavigateHomeIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.FallbackIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.PauseIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.ResumeIntent",
-                    "samples": []
                 }
             ],
             "types": []
@@ -81,8 +100,42 @@
                             "confirmationRequired": true,
                             "elicitationRequired": true,
                             "prompts": {
-                                "confirmation":"Confirm.Slot.1170703155793.1169631125804",
+                                "confirmation":"Confirm.Slot.rate.country",
                                 "elicitation": "Elicit.Slot.1542222363501.904961726653"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "SendMoneyIntent",
+                    "confirmationRequired": false,
+                    "prompts": {}, 
+                    "slots": [
+                        {
+                            "name": "country",
+                            "type": "AMAZON.Country",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.sendMoney.country"
+                            }
+                        },
+                        {
+                            "name": "phone_number",
+                            "type": "AMAZON.PhoneNumber",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.sendMoney.phone"
+                            }
+                        },
+                        {                                
+                            "name": "lastname",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.sendMoney.lastname"
                             }
                         }
                     ]
@@ -100,14 +153,50 @@
                     }
                 ]
             },
+            {
+                "id": "Elicit.Slot.sendMoney.country",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Can you tell me the country your are sending money ?"
+                    }
+                ]
+            },
             {  
-                "id": "Confirm.Slot.1170703155793.1169631125804",  
+                "id": "Confirm.Slot.rate.country",  
+                "variations": [  
+                    {  
+                        "type": "PlainText",  
+                        "value": "You said you want the Rate to {country}, right?"  
+                    }
+                ]  
+            },
+            {  
+                "id": "Confirm.Slot.sendMoney.country",  
                 "variations": [  
                     {  
                         "type": "PlainText",  
                         "value": "You said you're sending money to {country}, right?"  
                     }
                 ]  
+            },
+            {
+                "id": "Elicit.Slot.sendMoney.phone",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Can I have your registered phone number?"
+                    }
+                ]
+            }, 
+            {
+                "id": "Elicit.Slot.sendMoney.lastname",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Can you tell me your last name ?"
+                    }
+                ]
             }
         ]
     }

@@ -6,6 +6,8 @@
         "GOODBYE_MSG":"Hasta luego!",
         "REFLECTOR_MSG": "Acabas de ejecutar {{intentName}}",
         "FALLBACK_MSG":"Disculpa, No se eso. Puedes intentar nuevamente.",
-        "ERROR_MSG": "Disculpa, tengo problemas haciendo lo que solicitas. Puedes intentar nuevamente."   
+        "ERROR_MSG": "Disculpa, tengo problemas haciendo lo que solicitas. Puedes intentar nuevamente."   ,
+
+        "RATE_MSG": "La tasa hacia {0} comienza en {1}"
     }
 }

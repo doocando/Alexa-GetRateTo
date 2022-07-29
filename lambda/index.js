@@ -44,7 +44,9 @@ const ViaWelcomeIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'ViaWelcomeIntent';
     },
     handle(handlerInput) {
+        console.log ('entre')
         const speakOutput = handlerInput.t('HELLO_MSG'); //'Hello, how can I help you?';
+        console.log('speakOutput',speakOutput)
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
@@ -65,6 +67,7 @@ const HelpIntentHandler = {
             .getResponse();
     }
 };
+
 const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -149,10 +152,16 @@ const LocalisationRequestInterceptor={
 
 function GetRateTo(sCountry, smodecurrency) {
 
-    var rate = 0
+    var rate = {
+        amount: 0,
+        currencyName:''
+    }
     
     if (sCountry === 'COL')
-        rate = 3000
+        rate = {
+            amount: 4001.00 ,
+            currencyName : 'Colombian Pesos'
+        }
     return rate
 
   }
@@ -171,19 +180,20 @@ const RateToIntentIntentHandler = {
         const language = "en"
 
         const COUNTRY_ID = countries.getAlpha3Code(COUNTRY_NAME, language);
-        console.log('COUNTRY_ID',COUNTRY_ID)
-        let rate =  GetRateTo(COUNTRY_ID, MODE_CURRENY) 
-        let speakOutput = ''
-        console.log('rate',rate)
-        if (rate > 0) 
-            speakOutput =  String.format(handlerInput.t('RATE_MSG'),  COUNTRY_NAME ,rate ); 
+        let rate =  GetRateTo(COUNTRY_ID, MODE_CURRENY) ;
+        let speakOutput = '';
+        let reprompt =   String.format( handlerInput.t('RATE_REPROMPT'),  COUNTRY_NAME);
+        console.log('reprompt',reprompt );
+       console.log('rate',rate );
+        if (rate.amount > 0) 
+            speakOutput =  String.format(handlerInput.t('RATE_MSG'),  COUNTRY_NAME ,rate.amount , rate.currencyName ); 
         else
             speakOutput =  handlerInput.t('FALLBACK_MSG'); 
         
-        console.log('speakOutput',speakOutput)
+        console.log('speakOutput',speakOutput );
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .reprompt( reprompt )
             .getResponse();
     }
 };
