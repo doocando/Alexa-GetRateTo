@@ -1,6 +1,6 @@
 {
         "translation":{
-                "WELCOME_MSG":"Welcome to Redphone Skill, while you wait can say teach me something or What is the current rate. Which would you like to try?",
+                "WELCOME_MSG":"Welcome to Red Phone Skill, while you wait can say teach me something or What is the current rate. Which would you like to try?",
                 "HELLO_MSG": "Hello, how can I help you?",
                 "HELP_MSG": "You can say hello to me! How can I help?",
                 "GOODBYE_MSG":"Goodbye!",
@@ -9,8 +9,10 @@
                 "ERROR_MSG": "Sorry, I had trouble doing what you asked. Please try again.",
 
                 "RATE_MSG": "The rate to {0} starts at {1} {2}",
-                "RATE_REPROMPT" : "You can say something like: I want to send money to {0} to help you; what would you like to do ?"
+                "RATE_REPROMPT" : "You can say something like: I want to send money to {0} to help you; what would you like to do ?",
                
+                "SENDER_FOUND_MSG" : "Great, I found you information.",
+                "SENDER_NOT_FOUND_MSG" : "I was unable to find your account, let me ask for help."
 
         }
 }

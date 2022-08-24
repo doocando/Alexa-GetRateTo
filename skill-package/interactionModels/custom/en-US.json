@@ -69,6 +69,14 @@
                         {
                             "name": "lastname",
                             "type": "AMAZON.SearchQuery"
+                        },
+                        {
+                            "name": "amount",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "beneficiary",
+                            "type": "AMAZON.SearchQuery"
                         }
                     ],
                     "samples": [
@@ -137,6 +145,24 @@
                             "prompts": {
                                 "elicitation": "Elicit.Slot.sendMoney.lastname"
                             }
+                        },
+                        {                                
+                            "name": "amount",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.sendMoney.amount"
+                            }
+                        },
+                        {                                
+                            "name": "beneficiary",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.sendMoney.beneficiary"
+                            }
                         }
                     ]
                 }
@@ -195,6 +221,24 @@
                     {
                         "type": "PlainText",
                         "value": "Can you tell me your last name ?"
+                    }
+                ]
+            }, 
+            {
+                "id": "Elicit.Slot.sendMoney.amount",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "How much are you sending ?"
+                    }
+                ]
+            }, 
+            {
+                "id": "Elicit.Slot.sendMoney.beneficiary",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Who are you sending money to?"
                     }
                 ]
             }

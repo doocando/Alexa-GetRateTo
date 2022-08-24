@@ -150,6 +150,25 @@ const LocalisationRequestInterceptor={
 
 //******************************CUSTOM INTENTS ***********************/
 
+function getSender(sCountry, sPhoneNumber, sLastname) {
+    let response = {
+        success : true,
+        transaction: {}
+    }
+
+    try{
+        response.transaction.id_branch = "A00010"
+        response.transaction.id_sender = '1234'
+    }
+    catch(err ){
+        response.success = false
+        console.log("Error at sendMoneyTo",err)
+    }
+    
+    return response 
+
+  }
+
 function GetRateTo(sCountry, smodecurrency) {
 
     var rate = {
@@ -166,6 +185,11 @@ function GetRateTo(sCountry, smodecurrency) {
 
   }
 
+  /**
+   * Rate intent
+   * Returns the rate to an specific country
+   * Author: Carlos Sarmiento
+   */
 const RateToIntentIntentHandler = {
 
    canHandle(handlerInput) {
@@ -177,26 +201,105 @@ const RateToIntentIntentHandler = {
 
         const COUNTRY_NAME = handlerInput.requestEnvelope.request.intent.slots.country.value
         const MODE_CURRENY = 'N';
-        const language = "en"
-
+        
         const COUNTRY_ID = countries.getAlpha3Code(COUNTRY_NAME, language);
         let rate =  GetRateTo(COUNTRY_ID, MODE_CURRENY) ;
         let speakOutput = '';
         let reprompt =   String.format( handlerInput.t('RATE_REPROMPT'),  COUNTRY_NAME);
-        console.log('reprompt',reprompt );
-       console.log('rate',rate );
         if (rate.amount > 0) 
             speakOutput =  String.format(handlerInput.t('RATE_MSG'),  COUNTRY_NAME ,rate.amount , rate.currencyName ); 
         else
             speakOutput =  handlerInput.t('FALLBACK_MSG'); 
         
-        console.log('speakOutput',speakOutput );
+        
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt( reprompt )
             .getResponse();
     }
 };
+
+/**
+ * Send money
+ * Finds the customer and creates a new existing transaction
+ * Author: Carlos Sarmiento
+ */
+const InProgressSendMoneyIntentHandler = {
+
+    canHandle(handlerInput) {
+     
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest'
+             && request.intent.name === 'SendMoneyIntent'
+             && request.dialogSate !== 'COMPLETED';
+     },
+     handle(handlerInput) {
+ 
+        const COUNTRY_NAME = handlerInput.requestEnvelope.request.intent.slots.country.value
+        const PHONE_NUMBER = handlerInput.requestEnvelope.request.intent.slots.phone_number.value
+        const LASTNAME = handlerInput.requestEnvelope.request.intent.slots.lastname.value
+        let attributes = {};
+
+         
+        let speakOutput = '';
+        const response = getSender(COUNTRY_NAME, PHONE_NUMBER, LASTNAME) 
+        if(response.success){
+            attributes = {
+                transaction : {
+                    country : COUNTRY_NAME,
+                },
+                sender:{
+                    idBranch:response.transaction.id_branch,
+                    idSender: response.transaction.id_sender,
+                    phone : PHONE_NUMBER,
+                    lastname : LASTNAME
+                }
+            }
+            console.log('attributes',attributes)
+            handlerInput.attributesManager.setSessionAttributes(attributes);
+            speakOutput =  String.format( handlerInput.t('SENDER_FOUND_MSG') );
+        }
+        else
+            speakOutput = handlerInput.t('SENDER_NOT_FOUND_MSG')  
+        
+        return handlerInput.responseBuilder
+             .speak(speakOutput)
+             .reprompt( speakOutput )
+             .getResponse();
+     }
+ };
+
+
+ /***
+  * SEND MONY COMPLETED
+  * Author: Carlos Sarmiento
+  */
+
+
+  const CompletedSendMoneyIntentHandler = {
+
+    canHandle(handlerInput) {
+     
+        const request = handlerInput.requestEnvelope.request;
+        console.log('request',request)
+        return request.type === 'IntentRequest'
+             && request.intent.name === 'SendMoneyIntent'
+             && request.dialogSate === 'COMPLETED';
+     },
+     handle(handlerInput) {
+  
+        let attributes = handlerInput.attributesManager.getSessionAttributes();
+        console.log ("CompletedSendMoneyIntentHandler attributes" , attributes)
+        const BENEFICIARY = handlerInput.requestEnvelope.request.intent.slots.amont.value
+        const AMOUNT = handlerInput.requestEnvelope.request.intent.slots.beneficiary.value
+
+
+        return handlerInput.responseBuilder
+             .speak(speakOutput)
+             .getResponse();
+     }
+ };
+
 
 //****************************************************************** */
 
@@ -212,6 +315,8 @@ exports.handler = Alexa.SkillBuilders.custom()
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
         RateToIntentIntentHandler,
+        InProgressSendMoneyIntentHandler,
+        CompletedSendMoneyIntentHandler,
         IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
         ) 
     .addRequestInterceptors(LocalisationRequestInterceptor)
